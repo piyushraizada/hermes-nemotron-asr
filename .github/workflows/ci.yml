@@ -1,0 +1,58 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Byte-compile Python
+        run: python -m compileall -q server plugin tests
+
+      - name: Lint for real errors (pyflakes subset)
+        run: |
+          python -m pip install --quiet ruff
+          ruff check --select E9,F63,F7,F82 server plugin tests
+
+      - name: Shell syntax
+        run: bash -n installer/install.sh
+
+      - name: Import surface check (no model needed)
+        run: |
+          # The provider must import cleanly against a stubbed base class.
+          python - <<'PY'
+          import importlib.util, sys, types
+          pkg = types.ModuleType("agent"); pkg.__path__ = []
+          base = types.ModuleType("agent.transcription_provider")
+          base.TranscriptionProvider = type("TranscriptionProvider", (), {})
+          base.TranscriptionStreamSession = type("TranscriptionStreamSession", (), {})
+          sys.modules["agent"] = pkg; sys.modules["agent.transcription_provider"] = base
+          spec = importlib.util.spec_from_file_location("p", "plugin/nemotron-stream/__init__.py")
+          mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+          p = mod.NemotronProvider()
+          assert p.name == "nemotron" and p.streaming_capable is True
+          print("provider ok:", p.name)
+          PY
+
+      - name: Windows installer parses
+        shell: pwsh
+        run: |
+          $errs = $null
+          [System.Management.Automation.Language.Parser]::ParseFile(
+            "$PWD/installer/install.ps1", [ref]$null, [ref]$errs) | Out-Null
+          if ($errs.Count -gt 0) { $errs | ForEach-Object { Write-Error $_.Message }; exit 1 }
+          [System.Management.Automation.Language.Parser]::ParseFile(
+            "$PWD/installer/uninstall.ps1", [ref]$null, [ref]$errs) | Out-Null
+          if ($errs.Count -gt 0) { $errs | ForEach-Object { Write-Error $_.Message }; exit 1 }
