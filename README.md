@@ -1,5 +1,9 @@
 # Nemotron ASR for Hermes — CPU-only streaming dictation
 
+[![ci](https://github.com/piyushraizada/hermes-nemotron-asr/actions/workflows/ci.yml/badge.svg)](https://github.com/piyushraizada/hermes-nemotron-asr/actions/workflows/ci.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![model: NVIDIA Open Model License](https://img.shields.io/badge/model-NVIDIA%20Open%20Model%20License-76b900.svg)](NOTICE)
+
 Local, streaming speech-to-text for [Hermes Agent](https://hermes-agent.nousresearch.com) that runs
 on **four CPU threads**. No GPU, no API key, no audio leaving the machine.
 
@@ -43,7 +47,7 @@ The server is useful on its own — anything that can POST WAV bytes can use it.
 ### Windows
 
 ```powershell
-git clone https://github.com/<you>/hermes-nemotron-asr
+git clone https://github.com/piyushraizada/hermes-nemotron-asr
 cd hermes-nemotron-asr
 powershell -ExecutionPolicy Bypass -File installer\install.ps1
 ```
@@ -62,7 +66,7 @@ Options: `-ModelDir`, `-Port`, `-Threads`, `-NoAutostart`, `-NoHermes`.
 ### macOS / Linux
 
 ```bash
-git clone https://github.com/<you>/hermes-nemotron-asr
+git clone https://github.com/piyushraizada/hermes-nemotron-asr
 cd hermes-nemotron-asr
 ./installer/install.sh
 ```
