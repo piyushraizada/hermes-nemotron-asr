@@ -1,0 +1,13 @@
+name: nemotron-stream
+label: Nemotron Streaming STT
+kind: standalone
+version: 1.0.0
+author: NousResearch community
+description: >
+  Local CPU-only speech-to-text as the `nemotron` STT provider. Streams partial
+  transcripts while you speak (stt.streaming) and falls back to file
+  transcription, both served by a resident sherpa-onnx Nemotron 0.6B server on
+  127.0.0.1:8020. Audio never leaves the machine.
+requires_hermes: ">=0.22.5"
+provides_tools: []
+provides_hooks: []

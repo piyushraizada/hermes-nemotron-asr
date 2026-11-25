@@ -1,0 +1,39 @@
+Nemotron ASR for Hermes
+Copyright (c) 2026 Piyush Raizada
+
+This repository's source code is licensed under the MIT License (see LICENSE).
+
+-------------------------------------------------------------------------------
+MODEL — licensed by NVIDIA Corporation
+-------------------------------------------------------------------------------
+
+This product includes a speech recognition model licensed by NVIDIA Corporation
+under the NVIDIA Open Model License.
+
+  Licensed by NVIDIA Corporation under the NVIDIA Open Model License
+
+Model:        nemotron-speech-streaming-en-0.6b
+Upstream:     https://huggingface.co/nvidia/nemotron-speech-streaming-en-0.6b
+License text: https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/
+
+ONNX export used here (int8, 560 ms chunks):
+  sherpa-onnx-nemotron-speech-streaming-en-0.6b-560ms-int8-2026-04-25
+  https://github.com/k2-fsa/sherpa-onnx/releases
+
+The model weights are NOT distributed with this repository. installer/ downloads
+them at install time, and this NOTICE plus the license link are printed for the
+user. If you redistribute the weights yourself, you must ship a copy of the
+NVIDIA Open Model License Agreement alongside them and keep the attribution line
+above.
+
+NVIDIA claims no ownership of transcripts produced with the model.
+The model license is revocable per its Section 2.1 (IP litigation, bypassing
+safety guardrails).
+
+-------------------------------------------------------------------------------
+THIRD-PARTY SOFTWARE
+-------------------------------------------------------------------------------
+
+sherpa-onnx — https://github.com/k2-fsa/sherpa-onnx (Apache-2.0)
+numpy      — https://numpy.org (BSD-3-Clause)
+Hermes Agent — https://github.com/NousResearch/hermes-agent (see upstream license)
